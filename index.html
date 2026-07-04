@@ -1,0 +1,1257 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>David Ibanez — Full-Stack Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0a0f1a;
+        --panel: #101827;
+        --panel-hi: #141f33;
+        --border: #1e2a42;
+        --text: #e7ecf6;
+        --muted: #8b98b4;
+        --dim: #5c6885;
+        --teal: #56e8c9;
+        --amber: #f0a857;
+        --red: #ef6e6e;
+        --font-display: "Space Grotesk", sans-serif;
+        --font-body: "Inter", sans-serif;
+        --font-mono: "JetBrains Mono", monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        line-height: 1.5;
+        background-image:
+          radial-gradient(
+            circle at 15% 0%,
+            rgba(86, 232, 201, 0.06),
+            transparent 45%
+          ),
+          radial-gradient(
+            circle at 85% 20%,
+            rgba(240, 168, 87, 0.05),
+            transparent 40%
+          );
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* ---------- top bar ---------- */
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(10, 15, 26, 0.85);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+      }
+      .topbar .wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--font-mono);
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.02em;
+      }
+      .brand .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--teal);
+        box-shadow: 0 0 0 3px rgba(86, 232, 201, 0.15);
+        animation: pulse 2.2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 3px rgba(86, 232, 201, 0.15);
+        }
+        50% {
+          box-shadow: 0 0 0 6px rgba(86, 232, 201, 0.05);
+        }
+      }
+      nav {
+        display: none;
+        gap: 24px;
+        font-size: 13px;
+        color: var(--muted);
+        font-family: var(--font-mono);
+      }
+      nav a:hover {
+        color: var(--text);
+      }
+      @media (min-width: 720px) {
+        nav {
+          display: flex;
+        }
+      }
+      .status-chip {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--teal);
+        border: 1px solid rgba(86, 232, 201, 0.3);
+        background: rgba(86, 232, 201, 0.06);
+        padding: 6px 12px;
+        border-radius: 20px;
+      }
+      @media (min-width: 720px) {
+        .status-chip {
+          display: flex;
+        }
+      }
+
+      /* ---------- hero / overview ---------- */
+      .hero {
+        padding: 64px 0 32px;
+      }
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--dim);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .eyebrow::before {
+        content: "//";
+        color: var(--teal);
+      }
+      h1 {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: clamp(2.2rem, 5vw, 3.4rem);
+        letter-spacing: -0.02em;
+        margin-bottom: 10px;
+      }
+      .role-line {
+        font-family: var(--font-mono);
+        color: var(--muted);
+        font-size: clamp(0.95rem, 2vw, 1.1rem);
+        margin-bottom: 22px;
+      }
+      .role-line .cursor {
+        display: inline-block;
+        width: 8px;
+        height: 1.1em;
+        background: var(--amber);
+        margin-left: 2px;
+        vertical-align: -2px;
+        animation: blink 1s steps(1) infinite;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+      .btn {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        padding: 11px 18px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.15s ease;
+        cursor: pointer;
+        background: transparent;
+        color: var(--text);
+      }
+      .btn-primary {
+        background: var(--teal);
+        color: #06231c;
+        border-color: var(--teal);
+        font-weight: 600;
+      }
+      .btn-primary:hover {
+        filter: brightness(1.08);
+        transform: translateY(-1px);
+      }
+      .btn:not(.btn-primary):hover {
+        border-color: var(--dim);
+        background: var(--panel-hi);
+        transform: translateY(-1px);
+      }
+
+      /* stat grid */
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      @media (min-width: 620px) {
+        .stat-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (min-width: 900px) {
+        .stat-grid {
+          grid-template-columns: repeat(5, 1fr);
+        }
+      }
+      .stat {
+        background: var(--panel);
+        padding: 20px 18px;
+      }
+      .stat .num {
+        font-family: var(--font-display);
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .stat .num span {
+        color: var(--teal);
+      }
+      .stat .label {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        color: var(--muted);
+        margin-top: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      /* ---------- section shell ---------- */
+      section {
+        padding: 56px 0;
+        border-top: 1px solid var(--border);
+      }
+      .section-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+      }
+      .section-title {
+        font-family: var(--font-display);
+        font-size: 22px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .section-title .tag {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--dim);
+        border: 1px solid var(--border);
+        padding: 3px 8px;
+        border-radius: 6px;
+        font-weight: 400;
+      }
+      .section-sub {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        color: var(--dim);
+      }
+
+      /* ---------- deployment log (experience) ---------- */
+      .log {
+        position: relative;
+        padding-left: 28px;
+      }
+      .log::before {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 6px;
+        bottom: 6px;
+        width: 1px;
+        background: linear-gradient(var(--teal), var(--border) 70%);
+        opacity: 0.4;
+      }
+      .entry {
+        position: relative;
+        margin-bottom: 40px;
+      }
+      .entry:last-child {
+        margin-bottom: 0;
+      }
+      .entry::before {
+        content: "";
+        position: absolute;
+        left: -28px;
+        top: 6px;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--bg);
+        border: 2px solid var(--teal);
+      }
+      .entry-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 10px 14px;
+        margin-bottom: 4px;
+      }
+      .entry-org {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 17px;
+      }
+      .entry-time {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--amber);
+      }
+      .entry-role {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 14px;
+      }
+      .loglines {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .logline {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        font-size: 14.5px;
+        color: #c9d2e3;
+      }
+      .logline .kind {
+        flex: none;
+        width: 62px;
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        padding: 2px 0;
+        border-radius: 5px;
+        margin-top: 2px;
+        white-space: nowrap;
+      }
+      .kind.build {
+        color: var(--teal);
+        background: rgba(86, 232, 201, 0.08);
+        border: 1px solid rgba(86, 232, 201, 0.25);
+      }
+      .kind.test {
+        color: var(--amber);
+        background: rgba(240, 168, 87, 0.08);
+        border: 1px solid rgba(240, 168, 87, 0.25);
+      }
+      .kind.infra {
+        color: #8ea9f2;
+        background: rgba(142, 169, 242, 0.08);
+        border: 1px solid rgba(142, 169, 242, 0.25);
+      }
+      .kind.collab {
+        color: var(--muted);
+        background: rgba(139, 152, 180, 0.08);
+        border: 1px solid rgba(139, 152, 180, 0.25);
+      }
+
+      /* ---------- services (projects) ---------- */
+      .services {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      @media (min-width: 720px) {
+        .services {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .service-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        transition:
+          transform 0.15s ease,
+          border-color 0.15s ease;
+      }
+      .service-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--dim);
+      }
+      .service-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .service-name {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 17px;
+      }
+      .live-badge {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--teal);
+      }
+      .live-badge .d {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--teal);
+        animation: pulse 2.2s infinite;
+      }
+      .live-badge.proto {
+        color: var(--amber);
+      }
+      .live-badge.proto .d {
+        background: var(--amber);
+      }
+      .live-badge.building {
+        color: #8ea9f2;
+      }
+      .live-badge.building .d {
+        background: #8ea9f2;
+      }
+      .service-desc {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .service-meta {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        color: var(--dim);
+      }
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .chip {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: #c9d2e3;
+        background: var(--panel-hi);
+        border: 1px solid var(--border);
+        padding: 4px 9px;
+        border-radius: 6px;
+      }
+      .service-card.ghost {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border-style: dashed;
+        color: var(--dim);
+        min-height: 160px;
+      }
+      .service-card.ghost .service-name {
+        color: var(--dim);
+        font-size: 14px;
+      }
+      .service-link {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        color: var(--teal);
+        margin-top: -2px;
+        align-self: flex-start;
+      }
+      .service-link:hover {
+        text-decoration: underline;
+      }
+
+      /* ---------- stack monitor (skills) ---------- */
+      .filter-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 24px;
+      }
+      .filter-btn {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        padding: 7px 14px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .filter-btn.active,
+      .filter-btn:hover {
+        color: var(--bg);
+        background: var(--teal);
+        border-color: var(--teal);
+      }
+
+      .stack-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .stack-row {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 16px;
+        align-items: center;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 16px 18px;
+      }
+      @media (max-width: 640px) {
+        .stack-row {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+      }
+      .stack-cat {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        font-weight: 600;
+      }
+      .stack-cat .d {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--teal);
+        flex: none;
+      }
+      .stack-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      /* ---------- education ---------- */
+      .edu-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .edu-top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: baseline;
+      }
+      .edu-degree {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 17px;
+      }
+      .edu-school {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        color: var(--muted);
+      }
+      .edu-time {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--amber);
+      }
+      .edu-honours {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--teal);
+        border: 1px solid rgba(86, 232, 201, 0.3);
+        background: rgba(86, 232, 201, 0.06);
+        padding: 3px 9px;
+        border-radius: 6px;
+        display: inline-block;
+        width: fit-content;
+      }
+
+      /* ---------- contact ---------- */
+      .endpoint {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .endpoint-head {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        color: var(--teal);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--panel-hi);
+      }
+      .endpoint-head .verb {
+        background: rgba(86, 232, 201, 0.12);
+        padding: 3px 8px;
+        border-radius: 5px;
+        font-weight: 600;
+      }
+      .endpoint-body {
+        padding: 18px 20px;
+        display: flex;
+        flex-direction: column;
+      }
+      .kv {
+        display: grid;
+        grid-template-columns: 110px 1fr auto;
+        gap: 10px;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+        font-family: var(--font-mono);
+        font-size: 13.5px;
+      }
+      .kv:last-child {
+        border-bottom: none;
+      }
+      .kv .k {
+        color: var(--dim);
+      }
+      .kv .v {
+        color: var(--text);
+        word-break: break-all;
+      }
+      .kv .copy {
+        font-size: 11px;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        padding: 4px 9px;
+        border-radius: 6px;
+        cursor: pointer;
+        background: transparent;
+        white-space: nowrap;
+      }
+      .kv .copy:hover {
+        color: var(--text);
+        border-color: var(--dim);
+      }
+
+      footer {
+        padding: 36px 0 48px;
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--dim);
+      }
+
+      /* reveal-on-scroll */
+      .reveal {
+        opacity: 0;
+        transform: translateY(16px);
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s ease;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+        }
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--teal);
+        outline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="wrap">
+        <div class="brand">
+          <span class="dot"></span> DAVID IBANEZ // DEV.STATUS
+        </div>
+        <nav>
+          <a href="#experience">Experience</a>
+          <a href="#projects">Projects</a>
+          <a href="#stack">Stack</a>
+          <a href="#education">Education</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div class="status-chip">
+          <span class="dot" style="animation: none"></span> Available for
+          opportunities
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <section class="hero" style="border: none; padding-top: 56px">
+        <div class="eyebrow">system overview</div>
+        <h1>David Ibanez</h1>
+        <div class="role-line">
+          Software Developer — React · FastAPI · PostgreSQL · Full Stack<span
+            class="cursor"
+          ></span>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="David_Ibanez_Resume.pdf" download
+            >⭳ Download Resume</a
+          >
+          <a class="btn" href="mailto:jdavidip2022@gmail.com">✉ Email</a>
+          <a
+            class="btn"
+            href="https://github.com/jdavidIP"
+            target="_blank"
+            rel="noopener"
+            >GitHub</a
+          >
+          <a
+            class="btn"
+            href="https://linkedin.com/in/Ibanez"
+            target="_blank"
+            rel="noopener"
+            >LinkedIn</a
+          >
+        </div>
+
+        <div class="stat-grid reveal">
+          <div class="stat">
+            <div class="num"><span>11</span> mo</div>
+            <div class="label">Professional Experience</div>
+          </div>
+          <div class="stat">
+            <div class="num"><span>7</span></div>
+            <div class="label">Internal Apps Developed</div>
+          </div>
+          <div class="stat">
+            <div class="num"><span>90%</span></div>
+            <div class="label">Manual Effort Reduced</div>
+          </div>
+          <div class="stat">
+            <div class="num"><span>30%</span></div>
+            <div class="label">Engagement Uplift Delivered</div>
+          </div>
+          <div class="stat">
+            <div class="num"><span>Dist.</span></div>
+            <div class="label">B.CompSci, Co-op Honours</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience">
+        <div class="section-head reveal">
+          <div class="section-title">
+            Deployment Log <span class="tag">experience</span>
+          </div>
+          <div class="section-sub">chronological // most recent first</div>
+        </div>
+
+        <div class="log">
+          <div class="entry reveal">
+            <div class="entry-head">
+              <div class="entry-org">Kraken Sense</div>
+              <div class="entry-time">May 2026 — Present</div>
+            </div>
+            <div class="entry-role">
+              Junior Software Developer · Contract, Full-Time
+            </div>
+            <ul class="loglines">
+              <li class="logline">
+                <span class="kind build">BUILD</span> Designed, developed, and
+                maintained 3 internal full-stack applications using React,
+                FastAPI, and PostgreSQL to support internal operational
+                workflows.
+              </li>
+              <li class="logline">
+                <span class="kind build">BUILD</span> Built and enhanced backend
+                APIs with FastAPI, implementing business logic, database
+                interactions, and integrations across application services.
+              </li>
+              <li class="logline">
+                <span class="kind build">BUILD</span> Built responsive frontend
+                features in React alongside backend APIs, collaborating across
+                the full stack on the same builds.
+              </li>
+              <li class="logline">
+                <span class="kind collab">COLLAB</span> Collaborated closely
+                with engineers and stakeholders in an iterative development
+                cycle — gathering feedback, prioritizing requirements, and
+                refining features through short feedback loops.
+              </li>
+              <li class="logline">
+                <span class="kind build">BUILD</span> Leveraged AI-assisted
+                development tools such as Claude to accelerate testing,
+                debugging, and development workflows.
+              </li>
+              <li class="logline">
+                <span class="kind test">TEST</span> Performed QA testing and
+                debugged issues across frontend, backend, and database systems,
+                identifying and resolving problems prior to release.
+              </li>
+              <li class="logline">
+                <span class="kind infra">INFRA</span> Managed PostgreSQL
+                databases and supported deployments on Google Cloud Platform
+                using Cloud Run and Cloud SQL.
+              </li>
+            </ul>
+          </div>
+
+          <div class="entry reveal">
+            <div class="entry-head">
+              <div class="entry-org">Agro-Costa SAS</div>
+              <div class="entry-time">May 2024 — Dec 2024</div>
+            </div>
+            <div class="entry-role">Junior Software Developer Intern</div>
+            <ul class="loglines">
+              <li class="logline">
+                <span class="kind build">BUILD</span> Designed, developed, and
+                maintained 4 internal tools/applications supporting business
+                operations and automating manual workflows.
+              </li>
+              <li class="logline">
+                <span class="kind build">BUILD</span> Took ownership of features
+                across web, backend, automation, and database systems,
+                delivering solutions from design through deployment in a
+                production environment.
+              </li>
+              <li class="logline">
+                <span class="kind test">TEST</span> Practiced test-driven
+                development to validate business logic before implementation,
+                improving code reliability and reducing regressions in
+                production workflows.
+              </li>
+              <li class="logline">
+                <span class="kind build">BUILD</span> Implemented role-based
+                access control (RBAC) to manage multiple user types — increasing
+                platform engagement by 30%.
+              </li>
+              <li class="logline">
+                <span class="kind infra">INFRA</span> Developed and maintained
+                backend services using PHP, implementing business logic, API
+                integrations, and database-driven workflows.
+              </li>
+              <li class="logline">
+                <span class="kind test">TEST</span> Identified, investigated,
+                and resolved production issues across frontend, backend, and
+                data systems, tracing bugs to their root cause across the stack.
+              </li>
+              <li class="logline">
+                <span class="kind build">BUILD</span> Built a C# desktop
+                automation tool to process inventory and pricing updates via CSV
+                parsing and API integration, reducing manual effort by 90%.
+              </li>
+              <li class="logline">
+                <span class="kind infra">INFRA</span> Designed and optimized SQL
+                Server and MySQL queries to support reliable, relational data
+                access.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <div class="section-head reveal">
+          <div class="section-title">
+            Services <span class="tag">projects</span>
+          </div>
+          <div class="section-sub">shipped & in progress</div>
+        </div>
+        <div class="services">
+          <div class="service-card reveal">
+            <div class="service-top">
+              <div class="service-name">NinetyTally</div>
+              <div class="live-badge building">
+                <span class="d"></span> IN DEVELOPMENT
+              </div>
+            </div>
+            <div class="service-desc">
+              Letterboxd-style web app for football — rate and review matches,
+              competitions/seasons, team performances, and individual player
+              performances, follow other users, and build a personal watch log.
+            </div>
+            <div class="service-meta">
+              In development since June 2026 · Monorepo: Django REST API +
+              React/Vite/TypeScript SPA · JWT auth · Celery/Redis periodic
+              external-data sync
+            </div>
+            <div class="chip-row">
+              <span class="chip">Django REST Framework</span
+              ><span class="chip">PostgreSQL</span
+              ><span class="chip">JWT Auth</span
+              ><span class="chip">Celery + Redis</span
+              ><span class="chip">React</span
+              ><span class="chip">TypeScript</span
+              ><span class="chip">Vite</span>
+            </div>
+          </div>
+          <div class="service-card reveal">
+            <div class="service-top">
+              <div class="service-name">Simple Rentals</div>
+              <div class="live-badge"><span class="d"></span> DEPLOYED</div>
+            </div>
+            <div class="service-desc">
+              Full-stack rental platform with frontend UI, backend services,
+              authentication, and database architecture.
+            </div>
+            <div class="service-meta">
+              Jan 2025 — Aug 2025 · REST API · Django REST Framework ·
+              PostgreSQL · TDD with Cypress (unit & e2e) · CI/CD via Docker +
+              GitHub Actions
+            </div>
+            <div class="chip-row">
+              <span class="chip">React</span
+              ><span class="chip">Django REST</span
+              ><span class="chip">PostgreSQL</span
+              ><span class="chip">Cypress</span><span class="chip">TDD</span
+              ><span class="chip">Docker</span
+              ><span class="chip">GitHub Actions</span>
+            </div>
+            <a
+              class="service-link"
+              href="https://github.com/jdavidIP/Simple-Rentals"
+              target="_blank"
+              rel="noopener"
+              >↗ View repository</a
+            >
+          </div>
+          <div class="service-card reveal">
+            <div class="service-top">
+              <div class="service-name">
+                Real-Time Object Detection &amp; Tracking
+              </div>
+              <div class="live-badge proto">
+                <span class="d"></span> PROTOTYPE
+              </div>
+            </div>
+            <div class="service-desc">
+              Computer vision application that detects and tracks everyday
+              objects in real time from live video input.
+            </div>
+            <div class="service-meta">
+              2023 — 2024 · End-to-end pipeline: capture → preprocessing →
+              inference → bounding-box/tracking overlay · Tuned model parameters
+              for accuracy & frame-rate
+            </div>
+            <div class="chip-row">
+              <span class="chip">Python</span><span class="chip">OpenCV</span
+              ><span class="chip">YOLO</span
+              ><span class="chip">Computer Vision</span>
+            </div>
+          </div>
+          <!-- Add more <div class="service-card"> blocks here as new projects ship -->
+        </div>
+      </section>
+
+      <section id="stack">
+        <div class="section-head reveal">
+          <div class="section-title">
+            Stack Monitor <span class="tag">skills</span>
+          </div>
+          <div class="section-sub">all systems operational</div>
+        </div>
+
+        <div class="filter-row reveal" id="filterRow">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="lang">Languages</button>
+          <button class="filter-btn" data-filter="frontend">
+            Web & Frontend
+          </button>
+          <button class="filter-btn" data-filter="backend">
+            Backend & APIs
+          </button>
+          <button class="filter-btn" data-filter="db">Databases</button>
+          <button class="filter-btn" data-filter="cv">
+            Computer Vision & AI
+          </button>
+          <button class="filter-btn" data-filter="testing">Testing & QA</button>
+          <button class="filter-btn" data-filter="cloud">Cloud & DevOps</button>
+          <button class="filter-btn" data-filter="ai">AI-Assisted Dev</button>
+          <button class="filter-btn" data-filter="practices">Practices</button>
+        </div>
+
+        <div class="stack-grid" id="stackGrid">
+          <div class="stack-row reveal" data-cat="lang">
+            <div class="stack-cat">
+              <span class="d"></span>Programming Languages
+            </div>
+            <div class="stack-tags">
+              <span class="chip">Python</span
+              ><span class="chip">JavaScript</span
+              ><span class="chip">TypeScript</span><span class="chip">C#</span
+              ><span class="chip">C</span><span class="chip">C++</span
+              ><span class="chip">PHP</span><span class="chip">SQL</span
+              ><span class="chip">HTML5</span><span class="chip">CSS3</span>
+            </div>
+          </div>
+          <div class="stack-row reveal" data-cat="frontend">
+            <div class="stack-cat"><span class="d"></span>Web & Frontend</div>
+            <div class="stack-tags">
+              <span class="chip">React</span><span class="chip">Vue.js</span
+              ><span class="chip">Responsive UI Development</span>
+            </div>
+          </div>
+          <div class="stack-row reveal" data-cat="backend">
+            <div class="stack-cat"><span class="d"></span>Backend & APIs</div>
+            <div class="stack-tags">
+              <span class="chip">Node.js</span><span class="chip">FastAPI</span
+              ><span class="chip">Django</span><span class="chip">ASP.NET</span
+              ><span class="chip">PHP</span
+              ><span class="chip">REST API Design & Integration</span>
+            </div>
+          </div>
+          <div class="stack-row reveal" data-cat="db">
+            <div class="stack-cat">
+              <span class="d"></span>Database Technologies
+            </div>
+            <div class="stack-tags">
+              <span class="chip">PostgreSQL</span><span class="chip">MySQL</span
+              ><span class="chip">Microsoft SQL Server</span
+              ><span class="chip">MongoDB</span><span class="chip">SQLite</span>
+            </div>
+          </div>
+          <div class="stack-row reveal" data-cat="cv">
+            <div class="stack-cat">
+              <span class="d"></span>Computer Vision & AI
+            </div>
+            <div class="stack-tags">
+              <span class="chip">OpenCV</span><span class="chip">YOLO</span
+              ><span class="chip">Object Detection & Tracking</span>
+            </div>
+          </div>
+          <div class="stack-row reveal" data-cat="testing">
+            <div class="stack-cat"><span class="d"></span>Testing & QA</div>
+            <div class="stack-tags">
+              <span class="chip">Test-Driven Development (TDD)</span
+              ><span class="chip">Cypress (unit & e2e)</span
+              ><span class="chip">Manual QA</span
+              ><span class="chip">Bug Tracking</span
+              ><span class="chip">Test Plan Execution</span>
+            </div>
+          </div>
+          <div class="stack-row reveal" data-cat="cloud">
+            <div class="stack-cat"><span class="d"></span>Cloud & DevOps</div>
+            <div class="stack-tags">
+              <span class="chip">Docker</span
+              ><span class="chip">GCP (Cloud Run)</span
+              ><span class="chip">GCP (Cloud SQL)</span
+              ><span class="chip">Microsoft Azure</span
+              ><span class="chip">GitHub Actions</span
+              ><span class="chip">Git</span><span class="chip">CI/CD</span>
+            </div>
+          </div>
+          <div class="stack-row reveal" data-cat="ai">
+            <div class="stack-cat">
+              <span class="d"></span>AI-Assisted Development
+            </div>
+            <div class="stack-tags">
+              <span class="chip"
+                >Claude — used throughout the dev lifecycle</span
+              >
+            </div>
+          </div>
+          <div class="stack-row reveal" data-cat="practices">
+            <div class="stack-cat"><span class="d"></span>Practices</div>
+            <div class="stack-tags">
+              <span class="chip">Agile / Iterative Development</span
+              ><span class="chip">Pair Collaboration</span
+              ><span class="chip">Full-Stack Ownership</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="education">
+        <div class="section-head reveal">
+          <div class="section-title">
+            Build Info <span class="tag">education</span>
+          </div>
+          <div class="section-sub">foundation</div>
+        </div>
+        <div class="edu-card reveal">
+          <div class="edu-top">
+            <div>
+              <div class="edu-degree">
+                Bachelor of Computer Science — Honours (Co-op)
+              </div>
+              <div class="edu-school">Conestoga College, Waterloo</div>
+            </div>
+            <div class="edu-time">2021 — 2025</div>
+          </div>
+          <div class="edu-honours">With Distinction</div>
+          <div class="chip-row">
+            <span class="chip">Software Design Techniques</span>
+            <span class="chip">Data Structures & Algorithms</span>
+            <span class="chip">SDLC</span>
+            <span class="chip">Software Quality</span>
+            <span class="chip">OOP</span>
+            <span class="chip">Database Systems</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="section-head reveal">
+          <div class="section-title">
+            Contact <span class="tag">reach out</span>
+          </div>
+          <div class="section-sub">response time: usually within 24h</div>
+        </div>
+        <div class="endpoint reveal">
+          <div class="endpoint-head">
+            <span class="verb">POST</span> /contact/david-ibanez
+          </div>
+          <div class="endpoint-body">
+            <div class="kv">
+              <span class="k">email</span
+              ><span class="v" id="emailVal">jdavidip2022@gmail.com</span
+              ><button class="copy" data-copy="jdavidip2022@gmail.com">
+                Copy
+              </button>
+            </div>
+            <div class="kv">
+              <span class="k">phone</span
+              ><span class="v">+1 (548) 390-4453</span
+              ><button class="copy" data-copy="+15483904453">Copy</button>
+            </div>
+            <div class="kv">
+              <span class="k">github</span
+              ><span class="v">github.com/jdavidIP</span
+              ><a
+                class="copy"
+                href="https://github.com/jdavidIP"
+                target="_blank"
+                rel="noopener"
+                style="text-decoration: none"
+                >Open</a
+              >
+            </div>
+            <div class="kv">
+              <span class="k">linkedin</span
+              ><span class="v">linkedin.com/in/Ibanez</span
+              ><a
+                class="copy"
+                href="https://linkedin.com/in/Ibanez"
+                target="_blank"
+                rel="noopener"
+                style="text-decoration: none"
+                >Open</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>© 2026 David Ibanez · Built to ship, tested to last.</footer>
+    </div>
+
+    <script>
+      // scroll reveal
+      const revealEls = document.querySelectorAll(".reveal");
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      revealEls.forEach((el) => io.observe(el));
+
+      // stack filter
+      const filterBtns = document.querySelectorAll(".filter-btn");
+      const stackRows = document.querySelectorAll(".stack-row");
+      filterBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          filterBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const f = btn.dataset.filter;
+          stackRows.forEach((row) => {
+            row.style.display =
+              f === "all" || row.dataset.cat === f ? "" : "none";
+          });
+        });
+      });
+
+      // copy buttons
+      document.querySelectorAll(".copy[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(btn.dataset.copy);
+            const orig = btn.textContent;
+            btn.textContent = "Copied";
+            setTimeout(() => (btn.textContent = orig), 1400);
+          } catch (e) {
+            /* clipboard unavailable */
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
